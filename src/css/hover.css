@@ -1,0 +1,63 @@
+.banner_icon_profile i:nth-child(1):hover{
+    background-color: #3b5999;
+    color: #fff;
+}
+.banner_icon_profile i:nth-child(2):hover{
+    background-color: #4a9cec;
+    color: #fff;
+}
+.banner_icon_profile i:nth-child(3):hover{
+    background-color: #d6274d;
+    color: #fff;
+}
+.banner_icon_profile i:nth-child(4):hover{
+    background-color: #1260a2;
+    color: #fff;
+}
+.banner_icon_profile i:nth-child(5):hover{
+    background-color: #ce332a;
+    color: #fff;
+}
+.banner_icon_profile i{
+    transition: all 0.2s linear;
+    cursor: pointer;
+}
+.active{
+    transform: translate(0%);
+}
+.active_menu_barg{
+    background-color: #182020;
+}
+.menu_chidrent{
+    transition: transform .4s;
+}
+.menu_icon i:hover,.close:hover{
+    cursor: pointer;
+    color: orange;
+    transition: all .2s linear;
+}
+.header_network_icon a i:hover{
+    color: #00b4d9;
+    transition: all .2s linear;
+}
+.conten_menu_chidrent a:hover{
+    color: #00b4d9;
+    transition: all .2s linear;
+}
+.contact_addr a:hover{
+    transition: all .2s linear;
+    color: #1260a2;
+}
+.top:hover{
+    cursor: pointer;
+    background-color: #00b5d9b5;
+}
+.blog_item:hover{
+    cursor: pointer;
+    transition: all .2s linear;
+    box-shadow: 0 0 10px #999;
+}
+.active_clicker{
+    color: #00b4d9 !important;
+    background-color: transparent !important;
+}
