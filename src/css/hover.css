@@ -58,6 +58,43 @@
     box-shadow: 0 0 10px #999;
 }
 .active_clicker{
+    transition: background .4s linear;
     color: #00b4d9 !important;
     background-color: transparent !important;
+}
+.btn_img:hover{
+    cursor: pointer;
+    transition: all .2s linear;
+    opacity: .7;
+}
+.img_work .img img{
+    animation: ani .4s ease-in;
+}
+@keyframes ani{
+    0%{
+        opacity: 0;
+    }100%{
+        opacity: 100%;
+    }
+}
+.buttom_effect_1:hover{
+    background-color: #00b4d9;
+    color: #fff;
+    transition: all .2s linear;cursor: pointer;
+}
+.img:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+}
+.img:hover .icon_hover_img{
+    opacity: 1;
+    transition: 0.45s linear;
+}
+.active_create_img{
+    opacity: 1;
+    z-index: 9;
+}
+.active_form{
+    transform: translateY(0%) !important;
+    opacity: 1 !important;
 }

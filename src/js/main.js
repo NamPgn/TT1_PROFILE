@@ -1,138 +1,86 @@
 //import data
-import { data_job, data_timeline, data_timeline_2 } from "./data/data.js";
-console.log(1, data_job)
+import { data_job, data_timeline, data_timeline_2, img_data } from "./data/data.js";
+import {
+    slider,scroll_TOP,tab_Conten,open_Form_control,
+    showMess, timeline_read, detail_TT,
+    timeline_read_2, detail_timeline_2, isFunction_img, seach, _detail_imgANDtext, updated, isUpdate
+} from './function.js';
+import header from "../component/header.js";
+import footer from "../component/footer.js";
+
 //slideer
-
-const slideer = document.querySelector('.h');
-const slider_img = document.querySelectorAll('.h .slide_img_netw');
-const slider_width = slider_img[0].offsetWidth; //độ rộng cảu ảnh
-var index = 0;
-function go(value) {
-    slideer.style.transform = `translateX(-${value * slider_width}px)`;
-    index = value;
-}
-
-setInterval(() => { //set thời gian cho silde khi chuyển đến ảnh tiếp theo
-    if (index >= slider_img.length - 1) {
-        go(0);
-        return false;
-    }
-    index++;
-    go(index);
-    console.log(index);
-}, 4000)
-
+slider();
 
 //click_toggle_menu
-
 const click = document.querySelector('.menu_icon i');
 var menu = document.querySelector('.menu_chidrent');
-click.addEventListener('click', function () {
-    menu.classList.add('active');
-})
-document.querySelector('.close').addEventListener('click', () => { menu.classList.remove('active') });
-
-
-//cuộn chuột
-window.onscroll = function () {
-    if (document.body.scrollTop > 5 || document.documentElement.scrollTop > 5) {
-        document.querySelector('.header_conten').classList.add('active_menu_barg')
-        document.querySelector('.header_logo a img').src = "./src/img/logo/akuzmvjv.png";
-        document.querySelectorAll('.header_network_icon a, .menu_icon i').forEach(element => {
-            element.style.color = "#00b4d9";
-        });
-        document.querySelector('.top').style.opacity = 1;
-    } else {
-        document.querySelector('.header_conten').classList.remove('active_menu_barg');
-        document.querySelector('.header_logo a img').src = "./src/img/logo/akuzmvjv-removebg-preview.png";
-        document.querySelectorAll('.header_network_icon a, .menu_icon i').forEach(element => {
-            element.style.color = "#fff";
-        });
-        document.querySelector('.top').style.opacity = 0;
-    }
-};
-
-//click thì quay lại đầu trang
-var click_top_page = document.querySelector('.top').addEventListener('click', () => {
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-})
-
-
-// view page
-const data_jobs = document.querySelector(".f");
-
-function showMess(data) {
-    data_job.map((i) => {
-        console.log(i);
-        data_jobs.innerHTML += `
-            <div class="blog_item">
-                <div class="item_icon">
-                    <i class="${i.icon}"></i>
-                </div>
-                <div class="job_title">
-                    <h4><a href="#">${i.name}</a></h4>
-                </div>
-                <p>${i.text}</p>
-            </div>
-        `
+if (click) {
+    click.addEventListener('click', function () {
+        menu.classList.add('active');
     })
 }
+//remove class menu để ấn đi menu
+var close = document.querySelector('.close')
+if (close) {
+    close.addEventListener('click', () => { menu.classList.remove('active') });
+}
+
+//cuộn chuột
+
+scroll_TOP();
+//click thì quay lại đầu trang
+var click_top_page = document.querySelector('.top');
+if (click_top_page) {
+    click_top_page.addEventListener('click', () => {
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+    })
+}
+
+
+// view blog
 showMess();
 
-
 //timeline
-const timeline_item = document.querySelector('[taget="education"]');
-const education_tt7 = document.querySelector('[taget="education_"]');
-console.log(timeline_item);
-function timeline_read(data) {
-    data.map((i) => {
-        console.log(i.detail_tt);
-        timeline_item.innerHTML += `
-        <ul>
-            <li class="blof_education">
-                <div class="conten_text">
-                    <h4>${i.title}</h4>
-                    <span>${i.time}</span>
-                    <div class="text_">
-                        ${i.name}
-                    </div>
-                    <a class="taget" style="color:#00b4d9; " href="${i.detail_tt}">Chi tiết</a>
-                </div>
-            </li>
-        </ul>
-        `
-        // tìm đến cái value đấy kiểm tra nó có rỗng hay không nếu mà rỗng thì thông báo lỗi còn không thì next
-        const taget = document.querySelectorAll('.taget')
-        taget.forEach(element => {
-            element.addEventListener('click', () => {
-                console.log(i.a);
-                if (i.a== "") {
-                    alert('Error : Thử thách không tồn tại')
-                }else{
-                }
-            
-            })
-        });
-    })
-} timeline_read(data_timeline);
+timeline_read(data_timeline);
 
+//chi tiết thử thách giai đoạn 1
 
-function timeline_read_2(data) {
-    data.map((i) => {
-        education_tt7.innerHTML += `
-        <ul>
-        <li class="blof_education">
-            <div class="conten_text">
-                <h4>${i.title}</h4>
-                <span>${i.time}</span>
-                <div class="text_">
-                    ${i.name}
-                </div>
-                <a style="color:#00b4d9; " href="${i.detail_tt}">Chi tiết</a>
-            </div>
-        </li>
-    </ul>
-        `
-    })
-} timeline_read_2(data_timeline_2)
+detail_TT(data_timeline);
+
+//cột timeline 2
+timeline_read_2(data_timeline_2)
+
+//chi tiết timline 2
+detail_timeline_2();
+
+//click vào thì add class active
+
+tab_Conten();
+
+//select img
+//nếu mà click vào từng tab trên blog thì ảnh sẽ chuyển theo từng blog đấy
+seach();
+
+//view img ra màn hình
+isFunction_img(img_data);
+
+//click show detail img
+_detail_imgANDtext();
+
+//EDIT THỬ THÁCH 
+updated();
+
+//open form controll
+open_Form_control();
+//gọi hàm updated
+const isupdated = document.querySelector('.summit_update');
+if (isupdated) {
+    isupdated.addEventListener("click", isUpdate);
+}
+
+//footer page
+var footer_page=document.querySelector('.l')
+if(footer_page){
+    footer_page.innerHTML = footer.render();
+}
