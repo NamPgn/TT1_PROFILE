@@ -1,7 +1,7 @@
-import {data_job, data_timeline, data_timeline_2, img_data } from "./data/data.js";
+import { data_job, data_timeline, data_timeline_2, img_data } from "./data/data.js";
 
 const slideer = document.querySelector('.h');
-const go=(value)=>{
+const go = (value) => {
     if (slideer) {
         slideer.style.transform = `translateX(-${value * slider_img[0].offsetWidth}px)`;
         index = value;
@@ -9,7 +9,7 @@ const go=(value)=>{
 }
 const slider_img = document.querySelectorAll('.h .slide_img_netw');
 var index = 0;
-const slider =()=> {
+const slider = () => {
     setInterval(() => { //set thời gian cho silde khi chuyển đến ảnh tiếp theo
         if (index >= slider_img.length - 1) {
             go(0);
@@ -20,7 +20,17 @@ const slider =()=> {
     }, 4000)
 }
 
-const scroll_TOP =()=> {
+const click_to_Top = () => {
+    var click_top_page = document.querySelector('.top');
+    if (click_top_page) {
+        click_top_page.addEventListener('click', () => {
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        })
+    }
+}
+
+const scroll_TOP = () => {
     const top = document.querySelector('.top');
     window.onscroll = function () {
         if (document.body.scrollTop > 5 || document.documentElement.scrollTop > 5) {
@@ -122,7 +132,13 @@ const detail_TT = (data) => { //tạo ra 1 hàm có tên là chi tiết thử th
                     </tr>
                 </tbody>
             </table>
-            <button type="button" class="btn btn-warning">Edit</button>`
+            <div style="margin-top:20px;">
+                <button type="button" class="btn btn-warning">Edit</button>
+                <button type="button" class="btn btn-primary">Thêm cột</button>
+                <button type="button" class="btn btn-danger">Thêm dòng</button>
+                <button type="button" class="btn btn-info">Delete</button>
+            </div>
+            `
         if (document.querySelector('.btn-warning')) { //click thì mở form
             document.querySelector('.btn-warning').addEventListener('click', function () {
                 form_controll.classList.add('active_form');
@@ -155,10 +171,10 @@ const timeline_read_2 = (data) => {
     })
 }
 
-const detail_timeline_2 = () => {
+const detail_timeline_2 = (data) => {
     const cateId = new URLSearchParams(window.location.search).get("_id");
     console.log(cateId);
-    const id_ = data_timeline_2.find((item) => {
+    const id_ = data.find((item) => {
         return item.id == cateId;
     })
     if (id_) {
@@ -187,21 +203,31 @@ const detail_timeline_2 = () => {
             </tr>
         </tbody>
     </table>
-    <button type="button"  style="margin-top:20px;" class="btn btn-warning">Edit</button>
+    <div style="margin-top:20px;">
+        <button type="button" class="btn btn-warning">Edit</button>
+        <button type="button" class="btn btn-primary">Thêm cột</button>
+        <button type="button" class="btn btn-danger">Thêm dòng</button>
+        <button type="button" class="btn btn-info">Delete</button>
+    </div>
     `
+        if (document.querySelector('.btn-warning')) { //click thì mở form
+            document.querySelector('.btn-warning').addEventListener('click', function () {
+                form_controll.classList.add('active_form');
+            })
+        }
     }
 }
 
-const tab_Conten=()=>{
+const tab_Conten = () => {
     const click_btn_img = document.querySelectorAll('.btn_img p');
     click_btn_img.forEach(element => {
-    element.addEventListener('click', function () { //add cho tứng phần tử sự kiện click
-        var click_remove = document.querySelector('.active_clicker'); //tìm ra thằng nào đang có class là active khi click thì click nod đi
-        // và add class và thằng cần click
-        click_remove.classList.remove('active_clicker')
-        element.classList.add('active_clicker');
-    })
-});
+        element.addEventListener('click', function () { //add cho tứng phần tử sự kiện click
+            var click_remove = document.querySelector('.active_clicker'); //tìm ra thằng nào đang có class là active khi click thì click nod đi
+            // và add class và thằng cần click
+            click_remove.classList.remove('active_clicker')
+            element.classList.add('active_clicker');
+        })
+    });
 }
 
 const img_work = document.querySelector('.img_work');
@@ -261,7 +287,7 @@ const seach = () => {
         })
     }
 }
-const _detail_imgANDtext =()=> {
+const _detail_imgANDtext = () => {
     const img_page_ = document.querySelectorAll('.img img');//tất cả ảnh
     var icon_hover_img = document.querySelectorAll('.icon_hover_img');//icon_click eye
     var back_img_close = document.querySelector('.create_img'); //page close
@@ -299,7 +325,7 @@ const yc = document.querySelector('.yc'); //form yêu cầu
 const name_tt = document.querySelector('.name_tt');
 const thuthach_name = document.querySelector('.thuthach_name');
 const get_id = new URLSearchParams(window.location.search).get("_id");// lấy id được truyền lên trên url
-const  updated =(e)=> {
+const updated = (e) => {
     data_timeline.map(function (i) { //duyệt data
         if (get_id == i.id) { //so sánh nếu id của thăng data lấy được mà trùng vs thằng id trên url thì
             ids.value = i.id; //lấy ra tất cả value của thằng data truyên lên thằng form
@@ -312,29 +338,63 @@ const  updated =(e)=> {
             yc.value = i.yc_bb;
         }
     })
-
-} 
-
-const isUpdate=()=> {
-    const news_arr = { //tạo ra 1 thăng arr mới rổi có các trường tương tự như của thằng data
-        id: Number(get_id),
-        title: thuthach_name.value,
-        time: time.value,
-        yc_cb: handle.value,
-        teamplate: teamplate.value,
-        reponse: gd.value,
-        yc_bb: yc.value,
-    }
-    const n = data_timeline.findIndex(function (i) { //tìm và so sánh xem id cảu thằng da có trùng vs 
-        //id của mảng đã tạo hay không nếu trùng thì 
-        return i.id == news_arr.id
+    data_timeline_2.map(function (i) { //duyệt data
+        if (get_id == i.id) { //so sánh nếu id của thăng data lấy được mà trùng vs thằng id trên url thì
+            ids.value = i.id; //lấy ra tất cả value của thằng data truyên lên thằng form
+            thuthach_name.value = i.title;
+            name_tt.value = i.name;
+            time.value = i.time;
+            handle.value = i.yc_cb;
+            teamplate.value = i.teamplate;
+            gd.value = i.reponse;
+            yc.value = i.yc_bb;
+        }
     })
-    data_timeline.splice(n, 1, news_arr) //tìm đến index đấy rồi xóa nó đi và cập nhật thằng mới vào
-    form_controll.classList.remove('active_form');
-    alert('cập nhật thành công')
-    detail_TT(data_timeline)
+
 }
-const open_Form_control =()=>{
+
+const isUpdate = () => {
+    Swal.fire({ //thư viện sweater
+        title: 'Are you sure to update?',
+        text: "You won't be able to revert this!",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, updated it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(
+                'Updated!',
+                'Your file has been deleted.',
+                'success'
+            )
+            const news_arr = { //tạo ra 1 thăng arr mới rổi có các trường tương tự như của thằng data
+                id: Number(get_id),
+                title: thuthach_name.value,
+                time: time.value,
+                yc_cb: handle.value,
+                teamplate: teamplate.value,
+                reponse: gd.value,
+                yc_bb: yc.value,
+            }
+            const n = data_timeline.findIndex(function (i) { //tìm và so sánh xem id cảu thằng da có trùng vs 
+                //id của mảng đã tạo hay không nếu trùng thì 
+                return i.id == news_arr.id
+            })
+            const m = data_timeline_2.findIndex(function (i) { //tìm và so sánh xem id cảu thằng da có trùng vs 
+                //id của mảng đã tạo hay không nếu trùng thì 
+                return i.id == news_arr.id
+            })
+            data_timeline.splice(n, 1, news_arr) //tìm đến index đấy rồi xóa nó đi và cập nhật thằng mới vào
+            data_timeline_2.splice(m, 1, news_arr)
+            form_controll.classList.remove('active_form');
+            detail_TT(data_timeline)
+        }
+    })
+
+}
+const open_Form_control = () => {
     const close_form = document.querySelector('.close_contact_form i');
     if (close_form) {
         close_form.addEventListener('click', function () { //bấm thì đóng form
@@ -342,6 +402,7 @@ const open_Form_control =()=>{
         })
     }
 }
+
 export {
     go,
     slider,
@@ -357,6 +418,7 @@ export {
     seach,
     _detail_imgANDtext,
     updated,
-    isUpdate
+    isUpdate,
+    click_to_Top
 }
 

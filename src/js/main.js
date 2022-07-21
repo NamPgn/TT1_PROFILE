@@ -1,8 +1,8 @@
 //import data
 import { data_job, data_timeline, data_timeline_2, img_data } from "./data/data.js";
 import {
-    slider,scroll_TOP,tab_Conten,open_Form_control,
-    showMess, timeline_read, detail_TT,
+    slider, scroll_TOP, tab_Conten, open_Form_control,
+    showMess, timeline_read, detail_TT,click_to_Top,
     timeline_read_2, detail_timeline_2, isFunction_img, seach, _detail_imgANDtext, updated, isUpdate
 } from './function.js';
 import header from "../component/header.js";
@@ -26,16 +26,11 @@ if (close) {
 }
 
 //cuộn chuột
-
 scroll_TOP();
+
 //click thì quay lại đầu trang
-var click_top_page = document.querySelector('.top');
-if (click_top_page) {
-    click_top_page.addEventListener('click', () => {
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-    })
-}
+
+click_to_Top();
 
 
 // view blog
@@ -52,7 +47,7 @@ detail_TT(data_timeline);
 timeline_read_2(data_timeline_2)
 
 //chi tiết timline 2
-detail_timeline_2();
+detail_timeline_2(data_timeline_2);
 
 //click vào thì add class active
 
@@ -80,7 +75,7 @@ if (isupdated) {
 }
 
 //footer page
-var footer_page=document.querySelector('.l')
-if(footer_page){
+var footer_page = document.querySelector('.l')
+if (footer_page) {
     footer_page.innerHTML = footer.render();
 }
